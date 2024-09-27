@@ -25,4 +25,5 @@ export enum CategoryEnum {
 export enum RelationshipTypeEnum {
     Episode = 'isepisodeof',
     Season = 'isseasonof',
+    Promotion = 'ispromotionfor',
 }
