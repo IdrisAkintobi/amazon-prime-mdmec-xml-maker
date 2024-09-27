@@ -1,6 +1,6 @@
 import { LanguageEnum, RelationshipTypeEnum } from './enum/domain.enums';
 
-export type FeatureType = {
+export type MECSchemaType = {
     'mdmec:CoreMetadata': MdmecCoreMetadata;
 };
 

@@ -1,7 +1,6 @@
 import { CategoryEnum, LangRemap, LanguageEnum, RelationshipTypeEnum } from '../types/enum/domain.enums';
-import { ParsedType } from '../types/parsed.type';
+import { mecParsedType } from '../types/mec-parsed.type';
 import {
-    FeatureType,
     MdAltIdentifier,
     MdArtReference,
     MdDisplay,
@@ -12,17 +11,18 @@ import {
     MdRating,
     MdReleaseHistory,
     MdSequenceInfo,
-} from '../types/schema.type';
+    MECSchemaType,
+} from '../types/mec-schema.type';
 
-export class MdMecMapper {
-    static map(data: ParsedType): FeatureType {
+export class MECMapper {
+    static map(data: mecParsedType): MECSchemaType {
         const useRating = data['Rating'].toLowerCase() === 'yes';
         const category = data['Category'];
 
         // check if it is an episode or season
         const requireSequence = category === CategoryEnum.Episode || category === CategoryEnum.Season;
 
-        const Feature: FeatureType = {
+        const mecSchema: MECSchemaType = {
             'mdmec:CoreMetadata': {
                 '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
                 '@xmlns:md': 'http://www.movielabs.com/schema/md/v2.9/md',
@@ -60,11 +60,11 @@ export class MdMecMapper {
             },
         };
 
-        return Feature;
+        return mecSchema;
     }
 
     private static mapCategory(
-        data: ParsedType,
+        data: mecParsedType,
         category: CategoryEnum,
     ): {
         'md:SequenceInfo': MdSequenceInfo;
@@ -88,7 +88,7 @@ export class MdMecMapper {
         };
     }
 
-    private static mapArtReference(data: ParsedType): MdArtReference[] {
+    private static mapArtReference(data: mecParsedType): MdArtReference[] {
         const reference = data['ArtReference'].split(';');
         const resolution = data['ArtReference:resolution'].split(';');
         const purpose = data['ArtReference:purpose'].split(';');
@@ -113,7 +113,7 @@ export class MdMecMapper {
         return artReference;
     }
 
-    private static mapGenre(data: ParsedType): MdGenre[] {
+    private static mapGenre(data: mecParsedType): MdGenre[] {
         const genre = data['Genre'].split(';');
 
         const genreArray = [];
@@ -127,7 +127,7 @@ export class MdMecMapper {
         return genreArray;
     }
 
-    private static mapLocalizedInfo(data: ParsedType): MdLocalizedInfo[] {
+    private static mapLocalizedInfo(data: mecParsedType): MdLocalizedInfo[] {
         const languages = data['LocalizedInfo:language'].split(';');
         const titleDisplay = data['TitleDisplay'].split(';');
         const titleSort = data['TitleSort'].split(';');
@@ -158,7 +158,7 @@ export class MdMecMapper {
         return localizedInfo;
     }
 
-    private static mapReleaseHistory(data: ParsedType): MdReleaseHistory[] {
+    private static mapReleaseHistory(data: mecParsedType): MdReleaseHistory[] {
         const releaseType = data['ReleaseHistory:Type'].split(';');
         const country = data['ReleaseHistory:Country'].split(';');
         const date = data['ReleaseHistory:Date'].split(';');
@@ -185,7 +185,7 @@ export class MdMecMapper {
         return releaseHistory;
     }
 
-    private static mapAltIdentifier(data: ParsedType): MdAltIdentifier[] {
+    private static mapAltIdentifier(data: mecParsedType): MdAltIdentifier[] {
         const namespace = data['Identifier:Namespace'].split(';');
         const identifier = data['Identifier'].split(';');
 
@@ -206,7 +206,7 @@ export class MdMecMapper {
         return altIdentifier;
     }
 
-    private static mapRating(data: ParsedType): MdRating[] {
+    private static mapRating(data: mecParsedType): MdRating[] {
         const country = data['Rating:Country'].split(';');
         const system = data['Rating:System'].split(';');
         const value = data['Rating:Value'].split(';');
@@ -244,7 +244,7 @@ export class MdMecMapper {
         return peopleDisplayNames;
     }
 
-    private static mapPeople(data: ParsedType): MdPerson[] {
+    private static mapPeople(data: mecParsedType): MdPerson[] {
         const jobFunction = data['Cast:JobFunction'].split(';');
         const billingBlockOrder = data['Cast:BillingBlockOrder'].split(';');
         const displayNameLanguage = data['Cast:DisplayName:language'].split(';');
