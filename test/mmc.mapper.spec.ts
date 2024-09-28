@@ -23,7 +23,7 @@ describe('MMCMapper', () => {
     });
 
     it('mapExperience - should throw error when ExperienceID, ExperienceType, and ExperienceSubType arrays have different lengths', () => {
-        data.ExperienceID = 'experienceId1;experienceId12';
+        data.ExperienceType = 'Main;Promotion';
         expect(() => MMCMapper.map(data)).toThrow(
             'ExperienceID, ExperienceType, and ExperienceSubType, must have the same length',
         );
