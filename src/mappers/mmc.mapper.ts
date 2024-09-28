@@ -17,7 +17,7 @@ import {
 export class MMCMapper {
     static map(data: mmcParsedType): MMCSchemaType {
         //Number of Experience IDs must be equal to number of Presentation IDs
-        const experienceIDs = data.ExperienceID.split('||');
+        const experienceIDs = data.ExperienceID.split(';');
         const presentationIDs = data.PresentationID.split('||');
         if (experienceIDs.length !== presentationIDs.length) {
             throw new Error('ExperienceID and PresentationID must be of the same length');
@@ -78,7 +78,7 @@ export class MMCMapper {
         const experienceID = data.ExperienceID.split(';');
         const experienceType = data.ExperienceType.split(';');
         const experienceSubType = data.ExperienceSubType.split(';');
-        const presentationID = data.PresentationID.split(';');
+        const presentationID = data.PresentationID.split('||');
 
         // check if it is an episode or season
         const hasChildren = data.ExperienceChildID && data.ExperienceChildRelationship;
