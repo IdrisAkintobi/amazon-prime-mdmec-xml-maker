@@ -20,6 +20,7 @@ export enum CategoryEnum {
     Feature = 'Feature',
     Season = 'Season',
     Series = 'Series',
+    Promotion = 'Promotion',
 }
 
 export enum RelationshipTypeEnum {
