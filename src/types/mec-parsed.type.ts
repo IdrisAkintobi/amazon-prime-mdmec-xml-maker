@@ -1,5 +1,22 @@
 import { CategoryEnum } from './enum/domain.enums';
 
+export type ReleaseType =
+    | 'Original'
+    | 'Broadcast'
+    | 'DVD'
+    | 'Blu-ray'
+    | 'PayTV'
+    | 'InternetBuy'
+    | 'InternetRent'
+    | 'Theatrical'
+    | 'SVOD';
+
+export type WorkType = 'movie' | 'episode' | 'promotion' | 'season' | 'series';
+
+export type RelationshipType = 'isepisodeof' | 'isseasonof' | 'ispromotionfor';
+
+export type NamespaceType = 'EIDR' | 'ISAN' | 'IMDB' | 'ORG';
+
 export type mecParsedType = {
     ContentID: string;
 
@@ -23,7 +40,7 @@ export type mecParsedType = {
     'ArtReference:resolution': string;
     'ArtReference:purpose': string;
 
-    //LocalizedInfo - [Array] - separator(';')
+    //LocalizedInfo - [Array] - separator(';') //Additional subGenre are separated using '||'
     Genre: string;
 
     ReleaseYear: string;

@@ -14,6 +14,7 @@ import {
     MECSchemaType,
 } from '../types/mec-schema.type';
 
+const MAX_GENRE = 3;
 export class MECMapper {
     static map(data: mecParsedType): MECSchemaType {
         const useRating = data['Rating'].toLowerCase() === 'yes';
@@ -114,14 +115,29 @@ export class MECMapper {
     }
 
     private static mapGenre(data: mecParsedType): MdGenre[] {
-        const genre = data['Genre'].split(';');
+        if (!data['Genre']) {
+            throw new Error('Genre can not be empty');
+        }
+        const [genres, subGenres] = data['Genre'].split('||');
+        const genre = genres.split(';');
+        const subGenre = subGenres?.split(';');
 
-        const genreArray = [];
+        const genreArray = [
+            {
+                '@id': `av_genre_${genre[0]?.trim()}`,
+            },
+        ];
 
-        for (let i = 0; i < genre.length; i++) {
-            genreArray.push({
-                '@id': `av_genre_${genre[i]?.trim()}`,
-            });
+        for (let i = 1; i < MAX_GENRE; i++) {
+            if (genre[i]) {
+                genreArray.push({
+                    '@id': `av_genre_${genre[i]?.trim()}`,
+                });
+            } else if (subGenre && subGenre[i]) {
+                genreArray.push({
+                    '@id': `av_subgenre_${subGenre[i]?.trim()}`,
+                });
+            }
         }
 
         return genreArray;

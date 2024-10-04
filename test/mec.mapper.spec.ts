@@ -35,6 +35,11 @@ describe('MECMapper', () => {
         expect(() => MECMapper.map(data)).toThrow('DisplayNames in different language must have the same length');
     });
 
+    it('should throw error when Genre is empty', () => {
+        data['Genre'] = '';
+        expect(() => MECMapper.map(data)).toThrow('Genre can not be empty');
+    });
+
     it('should throw error when Cast:BillingBlockOrder arrays have different lengths', () => {
         data['Cast:BillingBlockOrder'] = '1';
         expect(() => MECMapper.map(data)).toThrow('JobFunction, BillingBlockOrder arrays must have the same length');
