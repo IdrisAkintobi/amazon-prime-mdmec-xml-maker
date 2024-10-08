@@ -1,4 +1,4 @@
-import { LanguageEnum, RelationshipTypeEnum } from './enum/domain.enums';
+import { RelationshipTypeEnum } from './enum/domain.enums';
 
 export type MECSchemaType = {
     'mdmec:CoreMetadata': MdmecCoreMetadata;
@@ -21,9 +21,9 @@ export type MdmecBasic = {
     'md:ReleaseHistory': MdReleaseHistory[];
     'md:WorkType': string;
     'md:AltIdentifier': MdAltIdentifier[];
-    'md:RatingSet': MdRatingSet;
+    'md:RatingSet': MdRatingSet | { 'md:NotRated': string };
     'md:People': MdPerson[];
-    'md:OriginalLanguage': LanguageEnum;
+    'md:OriginalLanguage': string;
     'md:AssociatedOrg': MdAssociatedOrg;
     'md:SequenceInfo'?: MdSequenceInfo;
     'md:Parent'?: MdParent;
@@ -40,7 +40,7 @@ export type MdAssociatedOrg = {
 };
 
 export type MdLocalizedInfo = {
-    '@language': LanguageEnum;
+    '@language': string;
     'md:TitleDisplayUnlimited'?: string;
     'md:TitleSort'?: MdSummary190Class;
     'md:ArtReference'?: MdArtReference[];
@@ -77,7 +77,7 @@ export type MdName = {
 };
 
 export type MdDisplay = {
-    '@language': LanguageEnum;
+    '@language': string;
     $: string;
 };
 

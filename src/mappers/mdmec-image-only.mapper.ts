@@ -1,4 +1,3 @@
-import { LangRemap, LanguageEnum } from '../types/enum/domain.enums';
 import { ImageOnlyParsedType } from '../types/image-only-parsed.type';
 import { ImageOnly, MdAltIdentifier, MdArtReference, MdLocalizedInfo } from '../types/image-only.type';
 
@@ -63,7 +62,7 @@ export class ImageOnlyMdMecMapper {
 
         for (let i = 0; i < languages.length; i++) {
             localizedInfo.push({
-                '@language': LanguageEnum[LangRemap[languages[i]]],
+                '@language': languages[i],
                 ['md:ArtReference']: this.mapArtReference(data),
             });
         }
