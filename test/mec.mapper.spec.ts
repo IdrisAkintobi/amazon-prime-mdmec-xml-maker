@@ -32,7 +32,9 @@ describe('MECMapper', () => {
 
     it('should throw error when Cast arrays have different lengths', () => {
         data['Cast:DisplayName'] = 'name1';
-        expect(() => MECMapper.map(data)).toThrow('DisplayNames in different language must have the same length');
+        expect(() => MECMapper.map(data)).toThrow(
+            'displayNames and displayNameLanguages separated by "||" must be of the same length',
+        );
     });
 
     it('should throw error when Genre is empty', () => {
@@ -42,7 +44,9 @@ describe('MECMapper', () => {
 
     it('should throw error when Cast:BillingBlockOrder arrays have different lengths', () => {
         data['Cast:BillingBlockOrder'] = '1';
-        expect(() => MECMapper.map(data)).toThrow('JobFunction, BillingBlockOrder arrays must have the same length');
+        expect(() => MECMapper.map(data)).toThrow(
+            'JobFunction, BillingBlockOrder, and Cast:DisplayName arrays must have the same length',
+        );
     });
 
     it('should throw error when ArtReference arrays have different lengths', () => {
@@ -68,6 +72,8 @@ describe('MECMapper', () => {
 
     it('should throw error when Cast:JobFunction arrays have different lengths', () => {
         data['Cast:JobFunction'] = 'job-function1';
-        expect(() => MECMapper.map(data)).toThrow('JobFunction, BillingBlockOrder arrays must have the same length');
+        expect(() => MECMapper.map(data)).toThrow(
+            'JobFunction, BillingBlockOrder, and Cast:DisplayName arrays must have the same length',
+        );
     });
 });

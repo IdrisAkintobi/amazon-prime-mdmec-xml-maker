@@ -1,4 +1,4 @@
-import { CategoryEnum, LangRemap, LanguageEnum, RelationshipTypeEnum } from '../types/enum/domain.enums';
+import { CategoryEnum, RelationshipTypeEnum } from '../types/enum/domain.enums';
 import { mecParsedType } from '../types/mec-parsed.type';
 import {
     MdAltIdentifier,
@@ -38,14 +38,13 @@ export class MECMapper {
                     'md:ReleaseHistory': this.mapReleaseHistory(data),
                     'md:WorkType': data['WorkType'],
                     'md:AltIdentifier': this.mapAltIdentifier(data),
-                    ...(useRating && {
-                        'md:RatingSet': {
-                            'md:Rating': this.mapRating(data),
-                        },
-                    }),
-                    ...(!useRating && { 'md:notrated': 'true' }),
+                    'md:RatingSet': useRating
+                        ? {
+                              'md:Rating': this.mapRating(data),
+                          }
+                        : { 'md:NotRated': 'true' },
                     'md:People': this.mapPeople(data),
-                    'md:OriginalLanguage': LanguageEnum[LangRemap[data['OriginalLanguage']]],
+                    'md:OriginalLanguage': data['OriginalLanguage'],
                     'md:AssociatedOrg': {
                         '@organizationID': data['OrganizationID'],
                         '@role': data['OrganizationRole'],
@@ -54,7 +53,7 @@ export class MECMapper {
                 },
                 'mdmec:CompanyDisplayCredit': {
                     'md:DisplayString': {
-                        '@language': LanguageEnum[LangRemap[data['CompanyDisplayCredit:language']]],
+                        '@language': data['CompanyDisplayCredit:language'],
                         $: data['CompanyDisplayCredit'],
                     },
                 },
@@ -161,12 +160,12 @@ export class MECMapper {
 
         for (let i = 0; i < languages.length; i++) {
             localizedInfo.push({
-                '@language': LanguageEnum[LangRemap[languages[i]]],
+                '@language': languages[i],
                 'md:TitleDisplayUnlimited': titleDisplay[i],
-                'md:TitleSort': titleSort[i]?.trim() || '',
-                ...(i === 0 && { ['md:ArtReference']: this.mapArtReference(data) }),
-                'md:Summary190': summary190[i]?.trim() || '',
-                'md:Summary400': summary400[i]?.trim() || '',
+                ...(data['TitleSort'] && { 'md:TitleSort': titleSort[i]?.trim() }),
+                ...(i === 0 && data.ArtReference && { ['md:ArtReference']: this.mapArtReference(data) }),
+                ...(data['Summary190'] && { 'md:Summary190': summary190[i]?.trim() }),
+                ...(data['Summary400'] && { 'md:Summary400': summary400[i]?.trim() }),
                 ...(i === 0 && { ['md:Genre']: this.mapGenre(data) }),
             });
         }
@@ -252,7 +251,7 @@ export class MECMapper {
 
         for (const lang in displayNameObj) {
             peopleDisplayNames.push({
-                '@language': LanguageEnum[LangRemap[lang]],
+                '@language': lang,
                 $: displayNameObj[lang][currIndex]?.trim(),
             });
         }
@@ -261,34 +260,24 @@ export class MECMapper {
     }
 
     private static mapPeople(data: mecParsedType): MdPerson[] {
+        const displayNameLanguages = data['Cast:DisplayName:language'].split(';');
+        const displayNames = data['Cast:DisplayName'].split('||');
         const jobFunction = data['Cast:JobFunction'].split(';');
         const billingBlockOrder = data['Cast:BillingBlockOrder'].split(';');
-        const displayNameLanguage = data['Cast:DisplayName:language'].split(';');
-        const displayNameObj = displayNameLanguage.reduce((acc: Record<string, string[]>, lang: LanguageEnum) => {
-            const key = `Cast:DisplayName${lang === LanguageEnum.EnUS ? '' : ':' + LanguageEnum[LangRemap[lang]]}`;
-            const value = data[key]?.split(';');
-            if (!value) {
-                throw new Error(`${key} column is missing`);
-            }
-            return {
-                ...acc,
-                [lang]: value,
-            };
-        }, {});
 
-        const displayNameValuesArray: Array<string>[] = Object.values(displayNameObj);
-
-        // check if all display names have the same length
-        displayNameValuesArray.forEach(value => {
-            if (displayNameValuesArray[0].length !== value.length) {
-                throw new Error('DisplayNames in different language must have the same length');
-            }
-        });
+        if (displayNameLanguages.length !== displayNames.length) {
+            throw new Error('displayNames and displayNameLanguages separated by "||" must be of the same length');
+        }
 
         // check if all arrays have the same length
         if (jobFunction.length !== billingBlockOrder.length) {
-            throw new Error('JobFunction, BillingBlockOrder arrays must have the same length');
+            throw new Error('JobFunction, BillingBlockOrder, and Cast:DisplayName arrays must have the same length');
         }
+
+        const displayNameObj = displayNameLanguages.reduce((acc, item, index) => {
+            acc[item] = displayNames[index].split(';');
+            return acc;
+        }, {});
 
         const people = [];
 
