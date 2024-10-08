@@ -12,27 +12,12 @@ export const mecSampleOutput = {
                     'md:TitleDisplayUnlimited': 'title-display',
                     'md:TitleSort': 'title-sort',
                     'md:ArtReference': [
-                        {
-                            '@resolution': 'res1',
-                            '@purpose': 'pur1',
-                            $: 'ref1',
-                        },
-                        {
-                            '@resolution': 'res2',
-                            '@purpose': 'pur2',
-                            $: 'ref2',
-                        },
+                        { '@resolution': 'res1', '@purpose': 'pur1', $: 'ref1' },
+                        { '@resolution': 'res2', '@purpose': 'pur2', $: 'ref2' },
                     ],
                     'md:Summary190': 'summary-190',
                     'md:Summary400': 'summary-400',
-                    'md:Genre': [
-                        {
-                            '@id': 'av_genre_genre1',
-                        },
-                        {
-                            '@id': 'av_genre_genre2',
-                        },
-                    ],
+                    'md:Genre': [{ '@id': 'av_genre_genre1' }, { '@id': 'av_genre_genre2' }],
                 },
             ],
             'md:ReleaseYear': '2022',
@@ -40,81 +25,42 @@ export const mecSampleOutput = {
             'md:ReleaseHistory': [
                 {
                     'md:ReleaseType': 'Cinema',
-                    'md:DistrTerritory': {
-                        'md:country': 'release-history-country',
-                    },
+                    'md:DistrTerritory': { 'md:country': 'release-history-country' },
                     'md:Date': '2022-01-01',
                 },
             ],
             'md:WorkType': 'work-type',
             'md:AltIdentifier': [
-                {
-                    'md:Namespace': 'ns1',
-                    'md:Identifier': 'id1',
-                },
-                {
-                    'md:Namespace': 'ns2',
-                    'md:Identifier': 'id2',
-                },
+                { 'md:Namespace': 'ns1', 'md:Identifier': 'id1' },
+                { 'md:Namespace': 'ns2', 'md:Identifier': 'id2' },
             ],
-            'md:notrated': 'true',
+            'md:RatingSet': { 'md:NotRated': 'true' },
             'md:People': [
                 {
-                    'md:Job': {
-                        'md:JobFunction': 'job-function1',
-                        'md:BillingBlockOrder': '1',
-                    },
+                    'md:Job': { 'md:JobFunction': 'job-function1', 'md:BillingBlockOrder': '1' },
                     'md:Name': {
                         'md:DisplayName': [
-                            {
-                                '@language': 'en-US',
-                                $: 'name1',
-                            },
-                            {
-                                '@language': 'ja-JP',
-                                $: 'name1',
-                            },
+                            { '@language': 'en-US', $: 'name1' },
+                            { '@language': 'ja-JP', $: 'name-ja-JP1' },
                         ],
                     },
                 },
                 {
-                    'md:Job': {
-                        'md:JobFunction': 'job-function2',
-                        'md:BillingBlockOrder': '2',
-                    },
+                    'md:Job': { 'md:JobFunction': 'job-function2', 'md:BillingBlockOrder': '2' },
                     'md:Name': {
                         'md:DisplayName': [
-                            {
-                                '@language': 'en-US',
-                                $: 'name2',
-                            },
-                            {
-                                '@language': 'ja-JP',
-                                $: 'name2',
-                            },
+                            { '@language': 'en-US', $: 'name2' },
+                            { '@language': 'ja-JP', $: 'name-ja-JP2' },
                         ],
                     },
                 },
             ],
             'md:OriginalLanguage': 'en-US',
-            'md:AssociatedOrg': {
-                '@organizationID': 'org-id',
-                '@role': 'org-role',
-            },
-            'md:SequenceInfo': {
-                'md:Number': '1',
-            },
-            'md:Parent': {
-                '@relationshipType': 'isseasonof',
-                'md:ParentContentID': 'parent-content-id',
-            },
+            'md:AssociatedOrg': { '@organizationID': 'org-id', '@role': 'org-role' },
+            'md:SequenceInfo': { 'md:Number': '1' },
+            'md:Parent': { '@relationshipType': 'isseasonof', 'md:ParentContentID': 'parent-content-id' },
         },
-        'mdmec:CompanyDisplayCredit': {
-            'md:DisplayString': {
-                '@language': 'en-US',
-                $: 'company-display-credit',
-            },
-        },
+        'mdmec:CompanyDisplayCredit': { 'md:DisplayString': { '@language': 'en-US', $: 'company-display-credit' } },
     },
 };
 
