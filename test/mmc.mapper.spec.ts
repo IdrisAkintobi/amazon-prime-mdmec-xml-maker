@@ -36,9 +36,7 @@ describe('MMCMapper', () => {
 
     it('mapPictureGroup - should throw error when PictureGroupID, PictureGroupPictureID, and PictureGroupImageID arrays have different lengths', () => {
         data.PictureGroupID = 'pictureGroupIDs1||pictureGroupIDs2';
-        expect(() => MMCMapper.map(data)).toThrow(
-            'PictureGroupID, PictureGroupPictureID, and PictureGroupImageID, must have the same length',
-        );
+        expect(() => MMCMapper.map(data)).toThrow('PictureGroupID, and PictureGroupImageID, must have the same length');
     });
 
     it('mapPresentations - should throw error when PresentationID, PresentationIDTrackNum, PresentationIDVid, presentationIDAud, and presentationIDSub arrays have different lengths', () => {

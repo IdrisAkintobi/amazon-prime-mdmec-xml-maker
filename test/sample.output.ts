@@ -135,7 +135,7 @@ export const mmcSampleOutput = {
         '@xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
         '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
         '@xsi:schemaLocation': 'http://www.movielabs.com/schema/manifest/v1.10/manifest manifest-v1.10.xsd',
-        'manifest:Compatibility': { 'manifest:SpecVersion': '1', 'manifest:Profile': 'MMC-1' },
+        'manifest:Compatibility': { 'manifest:SpecVersion': '1.10', 'manifest:Profile': 'MMC-1' },
         'manifest:Inventory': {
             'manifest:Audio': [
                 {
@@ -243,23 +243,24 @@ export const mmcSampleOutput = {
             {
                 '@PictureGroupID': 'PictureGroupID01',
                 'manifest:Picture': {
-                    'manifest:PictureID': 'PictureID01',
                     'manifest:ImageID': [{ $: 'ImageID01' }, { $: 'image02' }],
                 },
             },
         ],
         'manifest:Experiences': [
             {
-                '@ExperienceID': 'ExperienceID01',
-                'manifest:Audiovisual': {
-                    'manifest:Type': 'Movie',
-                    'manifest:SubType': 'Trailer',
-                    'manifest:PresentationID': 'PresentationID01',
+                'manifest:Experience': {
+                    '@ExperienceID': 'ExperienceID01',
+                    'manifest:Audiovisual': {
+                        'manifest:Type': 'Movie',
+                        'manifest:SubType': 'Trailer',
+                        'manifest:PresentationID': 'PresentationID01',
+                    },
+                    'manifest:PictureGroupID': 'PictureGroupID01',
+                    'manifest:ExperienceChild': [
+                        { 'manifest:Relationship': 'Trailer', 'manifest:ExperienceID': 'ChildID01' },
+                    ],
                 },
-                'manifest:PictureGroupID': 'PictureGroupID01',
-                'manifest:ExperienceChild': [
-                    { 'manifest:Relationship': 'Trailer', 'manifest:ExperienceID': 'ChildID01' },
-                ],
             },
         ],
         'manifest:ALIDExperienceMaps': {
