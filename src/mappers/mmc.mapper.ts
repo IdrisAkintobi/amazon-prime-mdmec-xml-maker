@@ -31,7 +31,7 @@ export class MMCMapper {
                 '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
                 '@xsi:schemaLocation': 'http://www.movielabs.com/schema/manifest/v1.10/manifest manifest-v1.10.xsd',
                 'manifest:Compatibility': {
-                    'manifest:SpecVersion': '1',
+                    'manifest:SpecVersion': '1.10',
                     'manifest:Profile': 'MMC-1',
                 },
                 'manifest:Inventory': {
