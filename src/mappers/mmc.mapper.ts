@@ -35,10 +35,10 @@ export class MMCMapper {
                     'manifest:Profile': 'MMC-1',
                 },
                 'manifest:Inventory': {
-                    'manifest:Audio': this.mapAudios(data),
+                    ...(data.AudioTrackID && { 'manifest:Audio': this.mapAudios(data) }),
                     'manifest:Video': this.mapVideos(data),
-                    'manifest:Image': this.mapImages(data),
-                    'manifest:Subtitle': this.mapSubtitles(data),
+                    ...(data.SubtitleTrackID && { 'manifest:Subtitle': this.mapSubtitles(data) }),
+                    ...(data.ImageID && { 'manifest:Image': this.mapImages(data) }),
                 },
                 'manifest:Presentations': {
                     'manifest:Presentation': this.mapPresentations(data),
@@ -92,20 +92,22 @@ export class MMCMapper {
 
         for (let i = 0; i < experienceID.length; i++) {
             manifestPresentations.push({
-                '@ExperienceID': experienceID[i]?.trim(),
-                'manifest:Audiovisual': {
-                    'manifest:Type': experienceType[i]?.trim(),
-                    'manifest:SubType': experienceSubType[i]?.trim(),
-                    'manifest:PresentationID': presentationID[i]?.trim(),
+                'manifest:Experience': {
+                    '@ExperienceID': experienceID[i]?.trim(),
+                    'manifest:Audiovisual': {
+                        'manifest:Type': experienceType[i]?.trim(),
+                        'manifest:SubType': experienceSubType[i]?.trim(),
+                        'manifest:PresentationID': presentationID[i]?.trim(),
+                    },
+                    ...(data.PictureGroupID && i === 0 && { 'manifest:PictureGroupID': data.PictureGroupID }),
+                    ...(hasChildren &&
+                        i === 0 && {
+                            'manifest:ExperienceChild': this.mapChildExperience(
+                                data.ExperienceChildID,
+                                data.ExperienceChildRelationship,
+                            ),
+                        }),
                 },
-                ...(data.PictureGroupID && i === 0 && { 'manifest:PictureGroupID': data.PictureGroupID }),
-                ...(hasChildren &&
-                    i === 0 && {
-                        'manifest:ExperienceChild': this.mapChildExperience(
-                            data.ExperienceChildID,
-                            data.ExperienceChildRelationship,
-                        ),
-                    }),
             });
         }
 
@@ -134,17 +136,11 @@ export class MMCMapper {
 
     private static mapPictureGroup(data: mmcParsedType): manifestPictureGroup[] {
         const pictureGroupIDs = data.PictureGroupID.split('||');
-        const pictureGroupPictureID = data.PictureGroupPictureID.split('||');
         const pictureGroupImageID = data.PictureGroupImageID.split('||');
 
         // check if all arrays have the same length
-        if (
-            pictureGroupIDs.length !== pictureGroupPictureID.length ||
-            pictureGroupIDs.length !== pictureGroupImageID.length
-        ) {
-            throw new Error(
-                'PictureGroupID, PictureGroupPictureID, and PictureGroupImageID, must have the same length',
-            );
+        if (pictureGroupIDs.length !== pictureGroupImageID.length) {
+            throw new Error('PictureGroupID, and PictureGroupImageID, must have the same length');
         }
 
         const manifestImages = [];
@@ -153,7 +149,6 @@ export class MMCMapper {
             manifestImages.push({
                 '@PictureGroupID': pictureGroupIDs[i]?.trim(),
                 'manifest:Picture': {
-                    'manifest:PictureID': pictureGroupPictureID[i]?.trim(),
                     'manifest:ImageID': this.mapPictureGroupImages(pictureGroupImageID[i]),
                 },
             });
@@ -195,8 +190,12 @@ export class MMCMapper {
                 'manifest:TrackMetadata': {
                     'manifest:TrackSelectionNumber': presentationIDTrackNum[i]?.trim(),
                     'manifest:VideoTrackReference': this.mapPresentationVid(presentationIDVid[i]),
-                    'manifest:AudioTrackReference': this.mapPresentationAud(presentationIDAud[i]),
-                    'manifest:SubtitleTrackReference': this.mapPresentationSub(presentationIDSub[i]),
+                    ...(presentationIDAud[i] && {
+                        'manifest:AudioTrackReference': this.mapPresentationAud(presentationIDAud[i]),
+                    }),
+                    ...(presentationIDSub[i] && {
+                        'manifest:SubtitleTrackReference': this.mapPresentationSub(presentationIDSub[i]),
+                    }),
                 },
             });
         }

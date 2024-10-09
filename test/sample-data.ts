@@ -34,7 +34,6 @@ export const mmcSampleData = {
     PresentationIDAud: 'Aud01',
     PresentationIDSub: 'Sub01',
     PictureGroupID: 'PictureGroupID01',
-    PictureGroupPictureID: 'PictureID01',
     PictureGroupImageID: 'ImageID01;image02',
     ExperienceID: 'ExperienceID01',
     ExperienceType: 'Movie',

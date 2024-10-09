@@ -77,7 +77,6 @@ export type manifestExperienceChild = {
 };
 
 export type manifestPicture = {
-    'manifest:PictureID': string;
     'manifest:ImageID': string[];
 };
 

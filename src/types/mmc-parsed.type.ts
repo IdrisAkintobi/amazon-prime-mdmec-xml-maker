@@ -64,12 +64,11 @@ export type mmcParsedType = {
     /**
      * This is optional
      * Each picture group are separated by '||' and the PictureGroupImageID is further separated by the regular ';'
-     * E,g PictureGroupID01||PictureGroupID02, PictureGroupPictureID01||PictureGroupPictureID02, PictureGroupImageID0101;PictureGroupImageID0102||PictureGroupImageID0201
+     * E,g PictureGroupID01||PictureGroupID02, PictureGroupImageID0101;PictureGroupImageID0102||PictureGroupImageID0201
      * Image IDs can be more than one. boxart, cover, hero...
      */
     //Picture group - [Array]  - separator('||') -childSeparator(';')
     PictureGroupID: string;
-    PictureGroupPictureID: string;
     PictureGroupImageID: string;
 
     /**
