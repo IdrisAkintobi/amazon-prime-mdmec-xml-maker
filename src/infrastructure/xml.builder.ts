@@ -4,6 +4,7 @@ export const xmlBuilder = new XMLBuilder({
     attributeNamePrefix: '@',
     textNodeName: '$',
     ignoreAttributes: false,
+    format: true,
 });
 
 export const validateXML = XMLValidator.validate;
