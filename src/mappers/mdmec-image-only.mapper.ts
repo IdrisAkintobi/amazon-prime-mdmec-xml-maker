@@ -37,6 +37,7 @@ export class ImageOnlyMdMecMapper {
 
         // check if all arrays have the same length
         if (reference.length !== resolution.length || reference.length !== purpose.length) {
+            console.log({ reference, resolution, purpose });
             throw new Error(
                 'ArtReference, ArtReference:resolution and, ArtReference:purpose arrays must have the same length',
             );
@@ -76,6 +77,7 @@ export class ImageOnlyMdMecMapper {
 
         // check if all arrays have the same length
         if (namespace.length !== identifier.length) {
+            console.log({ namespace, identifier });
             throw new Error('Identifier and Identifier:Namespace must have the same length');
         }
 

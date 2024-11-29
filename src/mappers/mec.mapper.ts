@@ -74,6 +74,7 @@ export class MECMapper {
         const parentContentID = data['ParentContentID'];
 
         if (!sequenceNumber || !parentContentID) {
+            console.log({ sequenceNumber, parentContentID });
             throw new Error('SequenceNumber and ParentContentID must be provided for Episode and Season');
         }
 
@@ -95,6 +96,7 @@ export class MECMapper {
 
         // check if all arrays have the same length
         if (reference.length !== resolution.length || reference.length !== purpose.length) {
+            console.log({ reference, resolution, purpose });
             throw new Error(
                 'ArtReference, ArtReference:resolution and, ArtReference:purpose arrays must have the same length',
             );
@@ -151,6 +153,7 @@ export class MECMapper {
 
         // check if all arrays have the same length
         if (languages.length !== titleDisplay.length || languages.length !== summary400.length) {
+            console.log({ languages, titleDisplay, summary400 });
             throw new Error('LocalizedInfo:language, TitleDisplay and, md:Summary400, must have the same length');
         }
 
@@ -180,6 +183,7 @@ export class MECMapper {
 
         // check if all arrays have the same length
         if (releaseType.length !== country.length || releaseType.length !== date.length) {
+            console.log({ releaseType, country, date });
             throw new Error(
                 'ReleaseHistory:Type, ReleaseHistory:Country and, ReleaseHistory:Date arrays must have the same length',
             );
@@ -206,6 +210,7 @@ export class MECMapper {
 
         // check if all arrays have the same length
         if (namespace.length !== identifier.length) {
+            console.log({ namespace, identifier });
             throw new Error('Identifier and Identifier:Namespace must have the same length');
         }
 
@@ -228,6 +233,7 @@ export class MECMapper {
 
         // check if all arrays have the same length
         if (country.length !== system.length || country.length !== value.length) {
+            console.log({ country, system, value });
             throw new Error('Rating:Country, Rating:System and, Rating:Value arrays must have the same length');
         }
 
@@ -266,11 +272,13 @@ export class MECMapper {
         const billingBlockOrder = data['Cast:BillingBlockOrder'].split(';');
 
         if (displayNameLanguages.length !== displayNames.length) {
+            console.log({ displayNameLanguages, displayNames });
             throw new Error('displayNames and displayNameLanguages separated by "||" must be of the same length');
         }
 
         // check if all arrays have the same length
         if (jobFunction.length !== billingBlockOrder.length) {
+            console.log({ jobFunction, billingBlockOrder });
             throw new Error('JobFunction, BillingBlockOrder, and Cast:DisplayName arrays must have the same length');
         }
 
