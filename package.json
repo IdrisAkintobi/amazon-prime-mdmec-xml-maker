@@ -1,6 +1,6 @@
 {
     "name": "mdmec-xml-maker",
-    "version": "2.0.5",
+    "version": "2.0.6",
     "description": "A package to create Amazon Prime v2.9 MEC and MMC xml file",
     "main": "dist/main.js",
     "directories": {
