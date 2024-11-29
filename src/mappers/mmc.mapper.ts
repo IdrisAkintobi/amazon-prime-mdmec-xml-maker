@@ -59,6 +59,7 @@ export class MMCMapper {
         const alidExperienceID = data.ALIDExperienceID.split(';');
 
         if (alid.length !== alidExperienceID.length) {
+            console.log({ alid, alidExperienceID });
             throw new Error('ALID and ALIDExperienceID must have the same length');
         }
 
@@ -85,6 +86,7 @@ export class MMCMapper {
 
         // check if all arrays have the same length
         if (experienceID.length !== experienceType.length || experienceType.length !== experienceSubType.length) {
+            console.log({ experienceID, experienceType, experienceSubType });
             throw new Error('ExperienceID, ExperienceType, and ExperienceSubType, must have the same length');
         }
 
@@ -119,6 +121,7 @@ export class MMCMapper {
         const childRelationship = relationship.split(';');
 
         if (childExperienceID.length !== childRelationship.length) {
+            console.log({ experienceId, relationship });
             throw new Error('ExperienceChildID and ExperienceChildRelationship must have the same length');
         }
 
@@ -140,6 +143,7 @@ export class MMCMapper {
 
         // check if all arrays have the same length
         if (pictureGroupIDs.length !== pictureGroupImageID.length) {
+            console.log({ pictureGroupIDs, pictureGroupImageID });
             throw new Error('PictureGroupID, and PictureGroupImageID, must have the same length');
         }
 
@@ -177,6 +181,7 @@ export class MMCMapper {
             presentationIDVid.length !== presentationIDAud.length ||
             presentationIDSub.length !== presentationIDs.length
         ) {
+            console.log({ presentationIDs, presentationIDVid, presentationIDSub });
             throw new Error(
                 'PresentationID, PresentationIDTrackNum, PresentationIDVid, presentationIDAud, and presentationIDSub must have the same length',
             );
@@ -241,6 +246,7 @@ export class MMCMapper {
             frameRateMultiplier.length !== frameRateTimecode.length ||
             frameRateTimecode.length !== frameRate.length
         ) {
+            console.log({ subtitleIDs, languages, frameRateMultiplier, frameRateTimecode });
             throw new Error(
                 'SubtitleTrackID, SubtitleType, SubtitleLanguage, SubtitleLocation, SubtitleFrameRateMultiplier, SubtitleFrameRate, and SubtitleFrameRateTimeCode  must have the same length',
             );
@@ -283,6 +289,7 @@ export class MMCMapper {
 
         // check if all arrays have the same length
         if (imageIDs.length !== purposes.length || languages.length !== locations.length) {
+            console.log({ imageIDs, purposes, languages, locations });
             throw new Error('ImageID, ImagePurpose, ImageLanguage, and ImageLocation must have the same length');
         }
 
@@ -350,11 +357,13 @@ export class MMCMapper {
 
         // check if all arrays have the same length
         if (trackIDs.length !== types.length || languages.length !== locations.length) {
+            console.log({ trackIDs, types, languages, locations });
             throw new Error('VideoTrackID, VideoType, VideoLanguage, and VideoLocation must have the same length');
         }
 
         // check if all arrays have the same length
         if (heightPx.length !== widthPx.length || aspectRatio.length !== heightPx.length) {
+            console.log({ heightPx, widthPx, aspectRatio });
             throw new Error('HeightPixels, WidthPixels, and AspectRatio, must have the same length');
         }
 
