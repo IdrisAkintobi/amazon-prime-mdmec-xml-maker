@@ -134,7 +134,7 @@ export class MECMapper {
                 });
                 genreCount++;
             }
-            if (subGenres && subGenres[i]) {
+            if (subGenres && subGenres[i] && genreCount < MAX_GENRE) {
                 genreArray.push({
                     '@id': `av_subgenre_${subGenres[i]?.trim()}`,
                 });
