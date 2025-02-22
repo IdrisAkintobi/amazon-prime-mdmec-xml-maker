@@ -119,25 +119,26 @@ export class MECMapper {
         if (!data['Genre']) {
             throw new Error('Genre can not be empty');
         }
-        const [genres, subGenres] = data['Genre'].split('||');
-        const genre = genres.split(';');
-        const subGenre = subGenres?.split(';');
+        const [allGenres, allSubGenres] = data['Genre'].split('||');
+        const genres = allGenres.split(';');
+        const subGenres = allSubGenres?.split(';');
 
-        const genreArray = [
-            {
-                '@id': `av_genre_${genre[0]?.trim()}`,
-            },
-        ];
+        const genreArray = [];
+        let genreCount = 0;
 
-        for (let i = 1; i < MAX_GENRE; i++) {
-            if (genre[i]) {
+        for (let i = 0; i < MAX_GENRE; i++) {
+            if (genreCount >= MAX_GENRE) break;
+            if (genres[i]) {
                 genreArray.push({
-                    '@id': `av_genre_${genre[i]?.trim()}`,
+                    '@id': `av_genre_${genres[i]?.trim()}`,
                 });
-            } else if (subGenre && subGenre[i]) {
+                genreCount++;
+            }
+            if (subGenres && subGenres[i]) {
                 genreArray.push({
-                    '@id': `av_subgenre_${subGenre[i]?.trim()}`,
+                    '@id': `av_subgenre_${subGenres[i]?.trim()}`,
                 });
+                genreCount++;
             }
         }
 
