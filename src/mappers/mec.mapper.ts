@@ -283,10 +283,16 @@ export class MECMapper {
             throw new Error('JobFunction, BillingBlockOrder, and Cast:DisplayName arrays must have the same length');
         }
 
-        const displayNameObj = displayNameLanguages.reduce((acc, item, index) => {
+        const displayNameObj: Record<string, string[]> = displayNameLanguages.reduce((acc, item, index) => {
             acc[item] = displayNames[index].split(';');
             return acc;
         }, {});
+
+        // Check if all language names ae of the same length and if the names length is the same as the functions
+        const isSameLength = Object.values(displayNameObj).every(i => i.length === jobFunction.length);
+        if (!isSameLength) {
+            throw new Error('JobFunction and the display names are not of the same length');
+        }
 
         const people = [];
 
